@@ -7,6 +7,10 @@ import Header from '../Header/Header'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
+import CreateTrain from '../Trains/CreateTrain'
+import ShowTrains from '../Trains/Trains'
+import Train from '../Trains/Train'
+import EditTrain from '../Trains/EditTrain'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
 class App extends Component {
@@ -53,6 +57,18 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/create-train' render={() => (
+            <CreateTrain alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/trains' render={() => (
+            <ShowTrains alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/trains/:id' render={() => (
+            <Train user={user} alert={this.alert} />
+          )} />
+          <AuthenticatedRoute user={user} path='/trains/:id/edit' render={() => (
+            <EditTrain user={user} alert={this.alert} />
           )} />
         </main>
       </Fragment>
