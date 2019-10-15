@@ -20,7 +20,14 @@ const EditTrain = ({ user, alert, match }) => {
       }
     })
       .then(res => setTrain(res.data.train))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        alert({
+          heading: 'Failed',
+          message: 'We are having trouble loading your data at the moment, perhaps the server is taking a nap. Please try again later.',
+          variant: 'danger'
+        })
+      })
   }, [])
 
   const handleChange = (event) => {
@@ -43,9 +50,16 @@ const EditTrain = ({ user, alert, match }) => {
       },
       data: { train }
     })
-      .then(() => alert({ heading: 'Success', message: 'You updated a train to keep track of', variant: 'success' }))
+      .then(() => alert({ heading: 'Success', message: 'We will use the updated information', variant: 'success' }))
       .then(() => setUpdated(true))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        alert({
+          heading: 'Failed',
+          message: 'Unhelpful error message',
+          variant: 'danger'
+        })
+      })
   }
   if (updated) {
     return <Redirect to={`/trains/${match.params.id}`} />

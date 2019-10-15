@@ -30,7 +30,15 @@ const CreateTrain = ({ user, alerts }) => {
       data: { train }
     })
       .then(response => setCreated(response.data.train._id))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        setTrain({ line: '', station: '' })
+        alert({
+          heading: 'Failed',
+          message: 'Unhelpful error message',
+          variant: 'danger'
+        })
+      })
   }
 
   if (created) {

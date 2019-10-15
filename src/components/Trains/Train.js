@@ -18,7 +18,14 @@ const Train = ({ user, match, alerts }) => {
     })
       .then(responseData =>
         setTrain(responseData.data.train))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        alert({
+          heading: 'Failed',
+          message: 'We are having trouble loading your data at the moment, perhaps the server is taking a nap. Please try again later.',
+          variant: 'danger'
+        })
+      })
   }, [])
 
   const destroy = () => {
@@ -30,7 +37,14 @@ const Train = ({ user, match, alerts }) => {
       }
     })
       .then(() => setDeleted(true))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        alert({
+          heading: 'Failed',
+          message: 'Nope',
+          variant: 'danger'
+        })
+      })
   }
 
   if (deleted) {

@@ -16,7 +16,14 @@ const Trains = ({ user, alerts }) => {
     })
       .then(responseData =>
         setTrains(responseData.data.trains))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        alert({
+          heading: 'Failed',
+          message: 'This is terribly embarrasing, but we are having trouble loading your data at the moment, perhaps the server is taking a nap. Please try again later.',
+          variant: 'danger'
+        })
+      })
   }, [])
 
   const trainsJsx = trains.map(train => (
