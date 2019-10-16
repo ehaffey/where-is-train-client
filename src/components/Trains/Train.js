@@ -4,12 +4,12 @@ import { Link, Redirect, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import apiUrl from './../../apiConfig'
 
-const Train = ({ user, match, alerts }) => {
+const Train = ({ user, match, alert }) => {
   const [train, setTrain] = useState([])
   const [deleted, setDeleted] = useState(false)
   const [trainAlerts, setTrainAlerts] = useState([{
     attributes: {
-      header: 'None!',
+      header: 'Click Check Alerts to download the latest alerts from the MBTA',
       timeframe: 'N/A'
     } }])
 
@@ -24,9 +24,18 @@ const Train = ({ user, match, alerts }) => {
       // .then(responseData =>
       //   console.log(responseData.data.data))
       .then(responseData =>
-        (responseData.data.data[0].attributes.header) ? setTrainAlerts(responseData.data.data) : null
+        (responseData.data.data[0]) ? setTrainAlerts(responseData.data.data) : setTrainAlerts([{
+          attributes: {
+            header: 'None!',
+            timeframe: 'N/A'
+          } }])
       // console.log(trainAlerts)
       )
+      .then(() => alert({
+        heading: 'Success',
+        message: 'Service alerts loaded',
+        variant: 'success'
+      }))
       // .then(responseData =>
       //   console.log(trainAlerts))
       .catch(error => {
@@ -76,12 +85,13 @@ const Train = ({ user, match, alerts }) => {
         'Authorization': `Token token=${user.token}`
       }
     })
+      .then(() => alert({ heading: 'Success', message: 'Train deleted', variant: 'success' }))
       .then(() => setDeleted(true))
       .catch(error => {
         console.error(error)
         alert({
           heading: 'Failed',
-          message: 'Nope',
+          message: 'Unhelpful error message',
           variant: 'danger'
         })
       })
