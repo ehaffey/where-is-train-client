@@ -5,7 +5,7 @@ import apiUrl from './../../apiConfig'
 import { Redirect } from 'react-router-dom'
 import TrainForm from './TrainForm'
 
-const CreateTrain = ({ user, alerts }) => {
+const CreateTrain = ({ user, alert }) => {
   // const [books, setBooks] = useState([])
   const [created, setCreated] = useState(null)
   const [train, setTrain] = useState({
@@ -30,6 +30,7 @@ const CreateTrain = ({ user, alerts }) => {
       data: { train }
     })
       .then(response => setCreated(response.data.train._id))
+      .then(() => alert({ heading: 'Success', message: 'Train saved. Here it is!', variant: 'success' }))
       .catch(error => {
         console.error(error)
         setTrain({ line: '', station: '' })
