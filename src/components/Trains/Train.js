@@ -10,8 +10,9 @@ const Train = ({ user, match, alert }) => {
   const [trainAlerts, setTrainAlerts] = useState([{
     attributes: {
       header: 'Click Check Alerts to download the latest alerts from the MBTA',
-      timeframe: 'N/A'
+      timeframe: ''
     } }])
+  const [trainColor, setTrainColor] = useState('')
 
   const mbtaGet = () => {
     axios({
@@ -27,10 +28,11 @@ const Train = ({ user, match, alert }) => {
         (responseData.data.data[0]) ? setTrainAlerts(responseData.data.data) : setTrainAlerts([{
           attributes: {
             header: 'None!',
-            timeframe: 'N/A'
+            timeframe: ''
           } }])
       // console.log(trainAlerts)
       )
+      .then(colorSet)
       .then(() => alert({
         heading: 'Success',
         message: 'Service alerts loaded',
@@ -50,12 +52,28 @@ const Train = ({ user, match, alert }) => {
 
   // if (alertsJsx[0].attributes.header !== 'None!') {
   const alertsJsx = trainAlerts.map(trainAlert => (
-    <div key={trainAlert.attributes.header}>
+    <div style={{ border: `3px solid #${trainColor}`, padding: '5px' }} key={trainAlert.attributes.header}>
       <p>Alert: {trainAlert.attributes.header}</p>
+      {trainAlert.attributes.timeframe &&
       <p>When: {trainAlert.attributes.timeframe}</p>
+      }
     </div>
   ))
-  // }
+
+  const colorSet = () => {
+    axios({
+      method: 'GET',
+      url: `https://api-v3.mbta.com/routes/${train.line}`,
+      headers: {
+        'accept': 'application/vnd.api+json'
+      }
+    })
+    //  .then(console.log)
+      .then(response =>
+        setTrainColor(response.data.data.attributes.color))
+      // console.log(response))
+      .catch(console.error)
+  }
 
   useEffect(() => {
     axios({
@@ -103,14 +121,14 @@ const Train = ({ user, match, alert }) => {
 
   return (
     <React.Fragment>
-      <h3>The following information is being used to track this train</h3>
+      <h3>Train Details</h3>
       <p>Line: {train.line}</p>
       <p>Your Station: {train.station}</p>
       <Link to={`/trains/${match.params.id}/edit`}>
-        <Button variant="warning" type="button">Edit</Button>
+        <Button style={{ marginBottom: '8px' }} variant="warning" type="button">Edit</Button>
       </Link>
-      <Button variant="danger" onClick={destroy}>Delete</Button>
-      <Button variant="danger" onClick={mbtaGet}>Check Alerts</Button>
+      <Button style={{ marginBottom: '8px' }} className ="ml-2" variant="danger" onClick={destroy}>Delete</Button>
+      <Button style={{ marginBottom: '8px' }} className ="ml-2" variant="info" onClick={mbtaGet}>Check Alerts</Button>
       {alertsJsx}
     </React.Fragment>
   )
