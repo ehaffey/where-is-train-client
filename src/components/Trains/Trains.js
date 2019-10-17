@@ -36,7 +36,7 @@ const Trains = ({ user, alerts }) => {
 
   return (
     <React.Fragment>
-      <h1>We found your train!</h1>
+      <h1>Your Trains</h1>
       {trainsJsx}
     </React.Fragment>
   )

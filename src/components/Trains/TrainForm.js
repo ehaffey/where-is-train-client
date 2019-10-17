@@ -29,6 +29,19 @@ const TrainForm = ({ train, handleChange, handleSubmit }) => {
           <option>Green-E</option>
           <option>Orange</option>
           <option>Red</option>
+          <option>CR-Fairmount</option>
+          <option>CR-Fitchburg</option>
+          <option>CR-Foxboro</option>
+          <option>CR-Franklin</option>
+          <option>CR-Greenbush</option>
+          <option>CR-Haverhill</option>
+          <option>CR-Kingston</option>
+          <option>CR-Lowell</option>
+          <option>CR-Middleborough</option>
+          <option>CR-Needham</option>
+          <option>CR-Newburyport</option>
+          <option>CR-Providence</option>
+          <option>CR-Worcester</option>
         </Form.Control>
       </Form.Group>
       <Form.Group controlId="station">
