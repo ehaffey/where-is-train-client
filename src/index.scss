@@ -1,1 +1,8 @@
 @import '~bootstrap/scss/bootstrap';
+$light: #eee;
+$dark: #999;
+
+body {
+  background: linear-gradient($light, $dark) no-repeat;
+  background-attachment: fixed;
+}

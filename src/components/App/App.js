@@ -45,12 +45,12 @@ class App extends Component {
             message={alert.message}
           />
         ))}
-        <main className="container">
+        <main className="container" style={{ backgroundImage: './../../../public/tmap.PNG' }}>
           <Route path='/sign-up' render={() => (
             <SignUp alert={this.alert} setUser={this.setUser} />
           )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn alert={this.alert} setUser={this.setUser} />
+          <Route exact path='/' render={() => (
+            <SignIn alert={this.alert} setUser={this.setUser} user={user}/>
           )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut alert={this.alert} clearUser={this.clearUser} user={user} />
